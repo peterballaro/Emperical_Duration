@@ -11,8 +11,16 @@ df = df.dropna()
 print(df.shape)
 
 # Regress EFF on 10yr no lag
-x = df['EFF'].to_numpy().reshape(len(df['EFF']), 1)
-y = df['10YR'].to_numpy().reshape(len(df['10YR']), 1)
-
-reg1 = myregression(x=x, y=y, constant=True)
+x1 = df['EFF'].to_numpy().reshape(len(df['EFF']), 1)
+y1 = df['10YR'].to_numpy().reshape(len(df['10YR']), 1)
+reg1 = myregression(x=x1, y=y1, constant=True)
 print(reg1)
+
+
+
+roll1 = 1
+x2 = df['EFF'].iloc[roll1:].to_numpy().reshape(len(df['EFF']) - roll1, 1)
+y2 = df['10YR'].shift(roll1).iloc[roll1:].to_numpy().reshape(len(df['10YR'])- roll1, 1)
+reg2 = myregression(x=x2, y=y2, constant=True)
+print(reg2)
+
